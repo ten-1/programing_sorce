@@ -24,8 +24,9 @@ Vector *AdditionVec(Vector vec1, Vector vec2)
 {
     int f;
     Vector *sum;
+    sum = (Vector *)malloc(sizeof(Vector));
+    double x;
     for (f = 0; f < D; f++)sum->vec[f] = vec1.vec[f] + vec2.vec[f];
-    printf("a\n");
     return sum;
 }
 /*引数の二つのベクトルの差を計算する*/
@@ -33,6 +34,7 @@ Vector *SubtractionVec(Vector vec1, Vector vec2)
 {
     int f;
     Vector *sum;
+    sum = (Vector *)malloc(sizeof(Vector));
     for (f = 0; f < D; f ++)sum -> vec[f] = vec1.vec[f] - vec2.vec[f];
     return sum; 
 }
@@ -100,19 +102,20 @@ int main()
         {
             minaddA = AdditionVec(vec[f], vec[g]);
             minsubA = SubtractionVec(vec[f], vec[g]);
-            if (f == 0 && g == 0)
+            if (f == 0 && g == 1)
             {
                 minadd = ValueVector(*minaddA);
                 minAdd[0] = vec[f];
                 minAdd[1] = vec[g];
                 minsub = ValueVector(*minsubA);
-                minAng[0] = vec[f];
-                minAng[1] = vec[g];
+                minSub[0] = vec[f];
+                minSub[1] = vec[g];
                 minang = AngelVec(vec[f], vec[g]);
                 minAng[0] = vec[f];
                 minAng[1] = vec[g];
                 continue;
             }
+            if (f == g)continue;
             if (minadd > ValueVector(*minaddA))
             {
                 minadd = ValueVector(*minaddA);
@@ -131,12 +134,26 @@ int main()
                 minAng[0] = vec[f];
                 minAng[1] = vec[g];
             }
+            free(minaddA);
+            free(minsubA);
         }
     }
     printf("Addition:(");
     PrintVector(minAdd[0]);
     printf(", ");
     PrintVector(minAdd[1]);
+    printf(" )\n");
+
+    printf("Submition:(");
+    PrintVector(minSub[0]);
+    printf(", ");
+    PrintVector(minSub[1]);
+    printf(" )\n");
+
+    printf("cos:(");
+    PrintVector(minAng[0]);
+    printf(", ");
+    PrintVector(minAng[1]);
     printf(" )\n");
 
     free(vec);
