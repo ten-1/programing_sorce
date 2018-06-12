@@ -22,12 +22,13 @@ typedef struct{
 /*引数の二つのベクトルの和を計算する*/
 Vector *AdditionVec(Vector vec1, Vector vec2)
 {
-    int f;
-    Vector *sum;
-    sum = (Vector *)malloc(sizeof(Vector));
-    double x;
-    for (f = 0; f < D; f++)sum->vec[f] = vec1.vec[f] + vec2.vec[f];
-    return sum;
+    
+    Vector *addtive_result = (Vector *)malloc(sizeof(Vector));
+    for (int f = 0; f < D; f++)
+    {
+        addtive_result->vec[f] = vec1.vec[f] + vec2.vec[f];
+    }
+    return addtive_result;
 }
 /*引数の二つのベクトルの差を計算する*/
 Vector *SubtractionVec(Vector vec1, Vector vec2)
