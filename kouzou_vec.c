@@ -71,8 +71,7 @@ void PrintVector(Vector vec)
 
 int main()
 {
-    Vector *vec, minAdd[2], minSub[2], minAng[2], *minaddA, *minsubA;
-    double minadd, minsub, minang;
+    Vector *vec;
     int n, f, g;
     printf("Input n: ");
     scanf("%d", &n); 
@@ -97,48 +96,57 @@ int main()
             scanf("%lf", &(vec[f].vec[g]));
         }
     }
-    for (f = 0; f < n; f++)
+
+    Vector minAdd[2];
+    Vector minSub[2];
+    Vector minAng[2];
+    float min_addtive_vector_magnitude = MAXFLOAT;
+    float min_subtract_vector_magnitude = MAXFLOAT;
+    float min_cos_angle = MAXFLOAT;
+    for(int i = 0 ; i < n ; i++)
     {
-        for (g = 0; g < n; g++)
+        for(int j = 0 ; j < n ; j++)
         {
-            minaddA = AdditionVec(vec[f], vec[g]);
-            minsubA = SubtractionVec(vec[f], vec[g]);
-            if (f == 0 && g == 1)
+            /** 同じVector要素は見る必要がない **/
+            if(i == j)
             {
-                minadd = ValueVector(*minaddA);
-                minAdd[0] = vec[f];
-                minAdd[1] = vec[g];
-                minsub = ValueVector(*minsubA);
-                minSub[0] = vec[f];
-                minSub[1] = vec[g];
-                minang = AngelVec(vec[f], vec[g]);
-                minAng[0] = vec[f];
-                minAng[1] = vec[g];
                 continue;
             }
-            if (f == g)continue;
-            if (minadd > ValueVector(*minaddA))
+
+        /** 加算比較 **/
+           Vector*  addtive_vec = AdditionVec(vec[i],vec[g]);
+            float vector_magunitude = ValueVector(*addtive_vec);
+            if(min_addtive_vector_magnitude > vector_magunitude)
             {
-                minadd = ValueVector(*minaddA);
-                minAdd[0] = vec[f];
+                min_addtive_vector_magnitude = (float)vector_magunitude;
+                minAdd[0] = vec[i];
                 minAdd[1] = vec[g];
             }
-            if (minsub > ValueVector(*minaddA))
+            free(addtive_vec);
+
+        /** 減算比較 **/
+            Vector*  subtract_vec = SubtractionVec(vec[i],vec[g]);
+            vector_magunitude = ValueVector(*subtract_vec);
+            if(min_subtract_vector_magnitude > vector_magunitude)
             {
-                minsub = ValueVector(*minaddA);
-                minAng[0] = vec[f];
-                minAng[1] = vec[g];
+                min_subtract_vector_magnitude = (float)vector_magunitude;
+                minSub[0] = vec[i];
+                minSub[1] = vec[j];
             }
-            if (minang > AngelVec(vec[f], vec[g]))
+            free(addtive_vec);
+
+        /** 角度比較 **/
+            float angle = AngelVec(vec[i],vec[g]);            
+            if(min_cos_angle > angle)
             {
-                minang = AngelVec(vec[f], vec[g]);
-                minAng[0] = vec[f];
-                minAng[1] = vec[g];
+                min_cos_angle = (float)angle;
+                minAng[0] = vec[i];
+                minAng[1] = vec[j];
             }
-            free(minaddA);
-            free(minsubA);
+
         }
     }
+
     printf("Addition:(");
     PrintVector(minAdd[0]);
     printf(", ");
