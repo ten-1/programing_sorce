@@ -71,8 +71,7 @@ void PrintVector(Vector vec)
 
 int main()
 {
-    Vector *vec, minAdd[2], minSub[2], minAng[2], *minaddA, *minsubA;
-    double minadd, minsub, minang;
+    Vector *vec;
     int n, f, g;
     printf("Input n: ");
     scanf("%d", &n); 
@@ -98,9 +97,9 @@ int main()
         }
     }
 
-    Vector min_addtive_vectors[2];
-    Vector min_subtract_vectors[2];
-    Vector min_cos_angle_vectors[2];
+    Vector minAdd[2];
+    Vector minSub[2];
+    Vector minAng[2];
     float min_addtive_vector_magnitude = MAXFLOAT;
     float min_subtract_vector_magnitude = MAXFLOAT;
     float min_cos_angle = MAXFLOAT;
@@ -120,8 +119,8 @@ int main()
             if(min_addtive_vector_magnitude > vector_magunitude)
             {
                 min_addtive_vector_magnitude = (float)vector_magunitude;
-                min_addtive_vectors[0] = vec[i];
-                min_addtive_vectors[1] = vec[g];
+                minAdd[0] = vec[i];
+                minAdd[1] = vec[g];
             }
             free(addtive_vec);
 
@@ -131,8 +130,8 @@ int main()
             if(min_subtract_vector_magnitude > vector_magunitude)
             {
                 min_subtract_vector_magnitude = (float)vector_magunitude;
-                min_subtract_vectors[0] = vec[i];
-                min_subtract_vectors[1] = vec[j];
+                minSub[0] = vec[i];
+                minSub[1] = vec[j];
             }
             free(addtive_vec);
 
@@ -141,8 +140,8 @@ int main()
             if(min_cos_angle > angle)
             {
                 min_cos_angle = (float)angle;
-                min_cos_angle_vectors[0] = vec[i];
-                min_cos_angle_vectors[1] = vec[j];
+                minAng[0] = vec[i];
+                minAng[1] = vec[j];
             }
 
         }
